@@ -7,7 +7,7 @@
         <span class="mb-2">Price:{{product.price }}</span>
       
         <div class="btn-group mt-auto">
-          <button type="button" class="btn  btn-outline-secondary fa fa-shopping-cart mr-2">Cart</button>
+          <button (click)="addItemToBasket()" type="button" class="btn  btn-outline-secondary fa fa-shopping-cart mr-2">Cart</button>
           <button routerLink="/shop/{{product.id}}" type="button" class="btn  btn-outline-secondary">View</button>
         </div>
        
