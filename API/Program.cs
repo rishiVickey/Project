@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Entity.identity;
 using Infrastructure.Data;
+using Infrastructure.identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +28,11 @@ namespace API
                    var context = Services.GetRequiredService<storeContext>();
                    await context.Database.MigrateAsync();
                    await StoreContextSeed.seedAsync(context,loggerFactory);
+
+                   var userManager = Services.GetRequiredService<UserManager<AppUser>>();
+                   var identityContext = Services.GetRequiredService<AppIdentityDbContext>();
+                   await identityContext.Database.MigrateAsync();
+                   await AppIdentityDbContextSeed.SeedUserAsync(userManager);
                }
                catch(Exception ex){
                    var logger = loggerFactory.CreateLogger<Program>();
